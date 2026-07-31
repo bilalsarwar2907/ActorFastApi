@@ -5,8 +5,10 @@ from repositories.actor_repository import ActorRepository
 
 router = APIRouter(prefix="/actors", tags=["Actors"])
 
+_repo = ActorRepository()
+
 def get_repo() -> IActorRepository:
-    return ActorRepository()
+    return _repo
 
 @router.get("/")
 def get_all(repo: IActorRepository = Depends(get_repo)):
@@ -20,7 +22,10 @@ def get_by_id(id: int, repo: IActorRepository = Depends(get_repo)):
 def create(actor: Actor, repo: IActorRepository = Depends(get_repo)):
     return repo.create(actor)
 
+@router.put("/{id}")
+def update(id: int, actor: Actor, repo: IActorRepository = Depends(get_repo)):
+    return repo.update(id, actor)
+
 @router.delete("/{id}")
 def delete(id: int, repo: IActorRepository = Depends(get_repo)):
     return repo.delete(id)
-
