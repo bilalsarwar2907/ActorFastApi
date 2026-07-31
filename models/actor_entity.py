@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database.database import Base
+from database.database import Base, engine
 
 class ActorEntity(Base):
     __tablename__ = "actors"
@@ -8,8 +8,6 @@ class ActorEntity(Base):
     name = Column(String, index=True)
     age = Column(Integer)
     gender = Column(String)
-
-    from models.actor_entity import ActorEntity
 
 def create_tables():
     Base.metadata.create_all(bind=engine)
