@@ -1,14 +1,21 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 from models.actor import Actor
 from interfaces.i_actor_repository import IActorRepository
-from repositories.actor_repository import ActorRepository
+from repositories.actor_db_repository import ActorDbRepository
+from database.database import SessionLocal
 
 router = APIRouter(prefix="/actors", tags=["Actors"])
 
-_repo = ActorRepository()
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-def get_repo() -> IActorRepository:
-    return _repo
+def get_repo(db: Session = Depends(get_db)) -> IActorRepository:
+    return ActorDbRepository(db)
 
 @router.get("/")
 def get_all(repo: IActorRepository = Depends(get_repo)):
