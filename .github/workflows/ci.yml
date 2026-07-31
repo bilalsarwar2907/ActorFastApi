@@ -20,8 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install fastapi uvicorn
+          pip install fastapi uvicorn sqlalchemy pytest httpx
 
-      - name: Check app starts
+      - name: Run tests
         run: |
-          python -c "from main import app; print('App loaded OK')"
+          pytest tests/test_actors.py -v
