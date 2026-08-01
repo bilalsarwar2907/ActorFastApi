@@ -7,7 +7,7 @@ def get_token():
     # Register a test user (ignore error if already exists)
     client.post("/auth/register", json={"username": "testuser", "password": "testpass"})
     # Login and get token
-    response = client.post("/auth/login", json={"username": "testuser", "password": "testpass"})
+    response = client.post("/auth/login", data={"username": "testuser", "password": "testpass"})
     return response.json()["access_token"]
 
 def test_register():
@@ -16,12 +16,12 @@ def test_register():
 
 def test_login():
     client.post("/auth/register", json={"username": "loginuser", "password": "pass123"})
-    response = client.post("/auth/login", json={"username": "loginuser", "password": "pass123"})
+    response = client.post("/auth/login", data={"username": "loginuser", "password": "pass123"})
     assert response.status_code == 200
     assert "access_token" in response.json()
 
 def test_login_wrong_password():
-    response = client.post("/auth/login", json={"username": "loginuser", "password": "wrongpass"})
+    response = client.post("/auth/login", data={"username": "loginuser", "password": "wrongpass"})
     assert response.status_code == 401
 
 def test_create_actor_without_token():
