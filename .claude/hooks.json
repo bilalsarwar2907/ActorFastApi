@@ -1,0 +1,15 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool_name": "Edit",
+        "file_paths": ["*.py"]
+      },
+      "command": "python -m pytest tests/test_actors.py -v",
+      "blocking": true,
+      "on_failure": "block",
+      "description": "Auto-run tests after any Python file edit. Claude cannot continue if tests fail."
+    }
+  ]
+}
