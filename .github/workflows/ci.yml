@@ -20,8 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install fastapi uvicorn sqlalchemy pytest httpx
-
+          pip install -r requirements.txt
+          pip install bcrypt==4.0.1
       - name: Run tests
         run: |
           pytest tests/test_actors.py -v
