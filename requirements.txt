@@ -3,3 +3,5 @@ uvicorn
 sqlalchemy
 pytest
 httpx
+python-jose[cryptography]
+passlib[bcrypt]
